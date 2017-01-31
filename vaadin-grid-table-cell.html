@@ -282,6 +282,19 @@
             .pop();
           }
 
+          var thead = this.parentElement.parentElement;
+          Polymer.dom(thead).querySelectorAll('tr:last-child th')
+          .sort(function(a, b) {
+            return a.column._order - b.column._order;
+          })
+          .forEach(function(cell, index, array) {
+            if (index < array.length - 1) {
+              var column = cell.column;
+              column.width = cell.offsetWidth + 'px';
+              column.flexGrow = 0;
+            }
+          });
+
           var targetCell = this._getHeaderCellByColumn(column);
           if (targetCell.offsetWidth) {
             var style = window.getComputedStyle(targetCell._cellContent);
